@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+
+        
+        <select name="city" id="city" onchange="setLocalTime(value)">
+            <%result.forEach(item => { %>
+                <option value='<%= item.zone_name %>' <%if(item.zone_name == 'Asia/Kolkata'){%> selected <%}%> ><%= item.zone_name %></option>
+           <% })%>
+        </select>
+
+        <h3 id="city_name" style="font-size: 50px;  margin: 50px 20px;"></h3>
+        <p id="date" style="font-size: 30px; margin: 10px 20px;"></p>
+       <p id="time"  style="font-size: 200px; margin: 10px auto;"></p>
+    </main>
+
+    <script>
+    setLocalTime();
+    let interval = setInterval(setLocalTime, 1000);
+
+   function setLocalTime(){
+
+    const abc = document.getElementById('city').value;
+    let selectedTime = new Date().toLocaleTimeString("en-US", {timeZone: abc,timestyle:'full',hourCycle:'h12'});
+    let selectedDate = new Date().toLocaleDateString("en-US", {timeZone: abc, weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",});
+    let selected24Time = new Date().toLocaleTimeString("en-US", {timeZone: abc,timestyle:'full',hourCycle:'h24'});
+    document.getElementById('city_name').innerHTML = abc;
+    document.getElementById('date').innerHTML = selectedDate;
+    document.getElementById('time').innerHTML = selectedTime;
+    
+   }
+    </script>
+</body>
+</html>
